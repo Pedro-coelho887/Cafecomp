@@ -17,6 +17,21 @@ def main():
                 payment = machine.financial_transaction(drink)
                 if payment:
                     machine.give_hot_drink(drink)
+        
+        elif user_option == "A":
+            # Administrador
+            valid_admin = machine.valid_admin()
+            if valid_admin:
+                machine.admin_options()
+                machine.fill_ingredients()
+                machine.withdraw_money()
+                machine.new_product()
+
+        elif user_option == "B":
+            payment = machine.financial_transaction(drink)
+            if payment:
+                drink = machine.dose_drink()
+
                 
 
 if __name__ == "__main__":
