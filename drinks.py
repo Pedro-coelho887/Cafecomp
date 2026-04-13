@@ -1,13 +1,14 @@
 # Bebidas Gerais
 class Drink():
-    def __init__(self,name,price):
+    def __init__(self,name,price,code):
         self.name = name
+        self.code = code
         self.price = price
 
 # Bebidas Dosadas
 class HotDrink(Drink):
-    def __init__(self,name,price):
-        super().__init__(name,price)
+    def __init__(self,name,price,code):
+        super().__init__(name,price,code)
         self.coffee = 0
         self.sugar = 0
         self.milk = 0
