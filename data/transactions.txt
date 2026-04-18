@@ -1,0 +1,13 @@
+name   code   preco   metodo   balanco
+Pedro    R    10.0    P      10.0
+Clara    R    10.0    P      20.0
+Renan    Sl    10.0    CD      30.0
+Clara    Sl    10.0    CC      10.0
+Pe    R    10.0    P      20.0
+C    Sl    10.0    P      10.0
+Pedro    Sl    10.0    P      10.0
+Pedro    R    10.0    CC      10.0
+Pedro    R    10.0    P      10.0
+Clara    R    10.0    CC      20.0
+Salis    R    10.0    CD      30.0
+Pedro    Sl    10.0    CC      10.0

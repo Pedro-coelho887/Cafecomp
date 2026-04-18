@@ -1,6 +1,6 @@
 # Bebidas Gerais
 class Drink():
-    def __init__(self,name,price,code):
+    def __init__(self,name:str,price:float,code:str):
         self.name = name
         self.code = code
         self.price = price

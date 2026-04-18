@@ -1,9 +1,10 @@
+from drinks import Drink
+from drinks import HotDrink
 class User:
-    def __init__(self,permission=None):
+    def __init__(self,permission=None,name=None,drink:Drink | None = None,payment_method:str | None = None):
+        self.name = name
         self.permission = permission
-        self.drink = None
+        self.drink = drink
+        self.payment_method = payment_method
 
-class Admin(User):
-    def __init__(self):
-        super().__init__("admin")
 

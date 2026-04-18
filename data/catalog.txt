@@ -1,0 +1,4 @@
+Descricao Codigo Preco
+Suco de Laranja Sl 5
+Refrigerante R 5
+Café C 10

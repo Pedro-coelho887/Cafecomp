@@ -1,0 +1,3 @@
+Codigo Estoque Preco Descricao
+R     7     10.0     Refrigerante
+Sl     9     10.0     Suco de Laranja
