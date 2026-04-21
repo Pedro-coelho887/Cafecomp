@@ -1,11 +1,10 @@
 class DataStorage:
     def __init__(self):
         self.candrinks_stock = {}
-        self.coffee_stock = {}
+        self.ingredients_stock = {}
 
     def read_candrinks_stock(self,filepath):
         """Lê o arquivo de estoque e transforma em um dicionário"""
-        result = {}
         with open(filepath) as f:
             products = f.readlines()
 
@@ -18,7 +17,17 @@ class DataStorage:
             self.candrinks_stock[code] = {"Quantidade":quantity,
                             "Preço": price,
                             "Descrição":description}
-        
+
+    def read_ingredients_stock(self,filepath):
+        """Lê o Arquivo de Estoque de ingredientes"""
+        with open(filepath) as f:
+            ingredients = f.readlines()
+
+        for ingredient in ingredients[1:]:
+            parts = ingredient.strip().split()
+            description = parts[0]
+            quantity = int(parts[1])
+            self.ingredients_stock[description] = int(quantity)     
     
     def update_transaction(self,filepath,user,accountBalance):
         """Atualiza o histórico de transações"""
@@ -35,15 +44,27 @@ class DataStorage:
 
 
     def update_candrinks_stock(self,user,accountBalance,selling = True):
-        """Atualiza a base de transações e o estoque"""
+        """Atualiza a base de transações e o estoque de bebidas em lata"""
         if selling:
             self.update_transaction("data/transactions.txt",user,accountBalance)
-        print(self.candrinks_stock)
+
         with open("data/candrinks_stock.txt","w",encoding="utf-8") as f:
             f.write("Codigo Estoque Preco Descricao\n")
 
             for code,info in self.candrinks_stock.items():
                 line = f"{code}     {info["Quantidade"]}     {info["Preço"]}     {info["Descrição"]}\n"
+                f.write(line)
+
+    def update_ingredients_stock(self,user,accountBalance,selling=True):
+        """Atualiza a base de transações e estoque de ingredientes"""
+        if selling:
+            self.update_transaction("data/transactions.txt",user,accountBalance)
+
+        with open("data/ingredients_stock.txt","w",encoding="utf-8") as f:
+            f.write("Ingrediente   Quantidade\n")
+
+            for type,quantity in self.ingredients_stock.items():
+                line = f"{type}   {quantity} \n"
                 f.write(line)
 
 

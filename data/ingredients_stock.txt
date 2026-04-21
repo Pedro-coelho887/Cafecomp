@@ -1,3 +1,4 @@
-Sugar 5
-Coffee 5
-Milk 5
+Ingrediente   Quantidade
+Coffee   25 
+Sugar   27 
+Milk   18 

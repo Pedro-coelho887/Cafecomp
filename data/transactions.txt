@@ -11,3 +11,10 @@ Pedro    R    10.0    P      10.0
 Clara    R    10.0    CC      20.0
 Salis    R    10.0    CD      30.0
 Pedro    Sl    10.0    CC      10.0
+Pedro    Sl    10.0    CC      10.0
+Saliente    Coffee    10    CC      10
+Ale    Coffee    10    CD      20
+Renan    C    10    P      10
+Doce    Sl    10.0    CC      20.0
+Edu    C    10    P      30.0
+L    C    10    CC      40.0
