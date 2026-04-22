@@ -18,6 +18,16 @@ class DataStorage:
                             "Preço": price,
                             "Descrição":description}
 
+    def get_actual_accountbalance(self,filepath):
+        """Coleta o caixa atual"""
+        with open(filepath) as f:
+            transactions = f.readlines()
+
+        last_transaction = transactions[-1].strip().split()
+        act_account_balance = float(last_transaction[-1])
+
+        return act_account_balance
+
     def read_ingredients_stock(self,filepath):
         """Lê o Arquivo de Estoque de ingredientes"""
         with open(filepath) as f:

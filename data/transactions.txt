@@ -18,3 +18,4 @@ Renan    C    10    P      10
 Doce    Sl    10.0    CC      20.0
 Edu    C    10    P      30.0
 L    C    10    CC      40.0
+Pedro    Sl    10.0    CC      50.0

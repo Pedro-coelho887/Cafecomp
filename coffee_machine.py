@@ -3,10 +3,10 @@ from drinks import HotDrink
 from users import User
 from data_storage import DataStorage
 class CoffeeMachine():
-    def __init__(self,storage):
+    def __init__(self,storage:DataStorage):
         print("Bem vindo a Máquina de Bebidas!")
-        self.__accountBalance = 0
         self.storage = storage
+        self.__accountBalance = self.storage.get_actual_accountbalance("data/transactions.txt")
         self.is_on = True
         self.user = None
 
@@ -82,6 +82,10 @@ class CoffeeMachine():
         elif drink_type == "C":
             self.buy_dosed_drink()
 
+    def valid_admin(self):
+        """TO DO: Validar que o usuário é Admin"""
+        pass
+
     def welcome(self):
         """TO DO: Loop principal da máquina"""
         self.is_on = True
@@ -93,12 +97,15 @@ class CoffeeMachine():
             user_type = input(f"Bem vindo {self.user.name}! Como posso ajudá-lo? \n Cliente(C) \n Administrador(A) \n Sair(E) \n Selecionado:")
             if user_type == "C":
                 self.client_intention()
+            elif user_type == "A":
+                self.valid_admin()
+                #self.admin_intention()
             elif user_type == "E":
                 self.is_on = False
+            else:
+                print("Selecione uma opção válida")
 
-    def valid_admin(self):
-        """TO DO: Validar que o usuário é Admin"""
-        pass
+    
     
     def admin_options(self):
         """TO DO: Retorna Opção selecionada pelo Admin (Reabastecer, Cadastrar Produto ou Tirar Dinheiro)"""
