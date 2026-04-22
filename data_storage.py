@@ -2,6 +2,7 @@ class DataStorage:
     def __init__(self):
         self.candrinks_stock = {}
         self.ingredients_stock = {}
+        self.admins = {}
 
     def read_candrinks_stock(self,filepath):
         """Lê o arquivo de estoque e transforma em um dicionário"""
@@ -43,7 +44,7 @@ class DataStorage:
             f.write(formated_transaction)
 
 
-    def update_candrinks_stock(self,user,accountBalance,selling = True):
+    def update_candrinks_stock(self,user=None,accountBalance=None,selling = True):
         """Atualiza a base de transações e o estoque de bebidas em lata"""
         if selling:
             self.update_transaction("data/transactions.txt",user,accountBalance)
@@ -55,7 +56,7 @@ class DataStorage:
                 line = f"{code}     {info["Quantidade"]}     {info["Preço"]}     {info["Descrição"]}\n"
                 f.write(line)
 
-    def update_ingredients_stock(self,user,accountBalance,selling=True):
+    def update_ingredients_stock(self,user = None,accountBalance=None,selling=True):
         """Atualiza a base de transações e estoque de ingredientes"""
         if selling:
             self.update_transaction("data/transactions.txt",user,accountBalance)
@@ -66,6 +67,20 @@ class DataStorage:
             for type,quantity in self.ingredients_stock.items():
                 line = f"{type}   {quantity} \n"
                 f.write(line)
+
+    def get_admins(self,filepath):
+        """Guarda os Admins e sua senha"""
+        with open(filepath) as f:
+            admins = f.readlines()
+
+        for admin in admins[1:]:
+            parts = admin.strip().split()
+            admin_name = parts[0]
+            admin_password = parts[1]
+            self.admins[admin_name] = admin_password
+
+    def show_stats(self,filepath):
+        pass
 
 
 

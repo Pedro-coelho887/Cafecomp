@@ -68,9 +68,9 @@ class CoffeeMachine():
         self.user.drink = HotDrink(name="Coffee",price=10,code="C",coffee=coffee,milk=milk,sugar=sugar) #type:ignore
         success = self.financial_transaction()
         if success:
-            self.storage.ingredients_stock["Coffee"] -= coffee
-            self.storage.ingredients_stock["Milk"] -= milk
-            self.storage.ingredients_stock["Sugar"] -= sugar
+            self.storage.ingredients_stock["Café"] -= coffee
+            self.storage.ingredients_stock["Leite"] -= milk
+            self.storage.ingredients_stock["Açúcar"] -= sugar
             self.storage.update_ingredients_stock(self.user,self.__accountBalance)
             print("Aproveite seu Café!")
 
@@ -82,31 +82,74 @@ class CoffeeMachine():
         elif drink_type == "C":
             self.buy_dosed_drink()
 
+    def valid_admin(self):
+        """Valida que o usuário é Admin"""
+        if self.user.name in self.storage.admins.keys(): #type:ignore
+            password = input("Digite a sua senha de administrador: ")
+            if self.storage.admins[self.user.name] == password: #type:ignore
+                return True
+            
+        print("Autenticação inválida")
+        return False
+
+    def admin_intention(self):
+        """Capta a intenção do administrador"""
+        admin_option = ""
+        while admin_option != "E":
+            admin_option = input(f"Olá {self.user.name}! O que deseja fazer? \n Reabastecer Bebidas em Lata (Rl)\n Reabastecer Ingredientes de Café (Ri)\n Ver estatísticas (S)\n Sair (E)\n") #type:ignore
+            if admin_option == "Rl":
+                self.show_candrinks_stock()
+                candrink_code = input("Qual bebida deseja abastecer? (Digite o código)")
+                if candrink_code not in self.storage.candrinks_stock.keys():
+                    print("Código de bebida inválido!")
+                    return
+    
+                quantity = int(input("Quantas unidades serão repostas?"))
+                self.storage.candrinks_stock[candrink_code]["Quantidade"] += quantity
+                self.storage.update_candrinks_stock(selling=False)
+                print("Reposição feita com sucesso!")
+
+            elif admin_option == "Ri":
+                self.show_ingredients_stock()
+                new_coffee = int(input("Quanto de Café deseja abastecer?"))
+                new_sugar  = int(input("Quanto de Açúcar deseja abastecer?"))
+                new_milk = int(input("Quanto de Leite deseja abastecer?"))
+                self.storage.ingredients_stock["Café"] += new_coffee
+                self.storage.ingredients_stock["Leite"] += new_milk
+                self.storage.ingredients_stock["Açúcar"] += new_sugar
+                self.storage.update_ingredients_stock(selling=False)
+                print("Reposição feita com sucesso!")
+
+            elif admin_option == "S":
+                self.storage.show_stats("data/transactions.txt")
+
+            elif admin_option != "E":
+                print("Selecione uma operação válida!")
+
+
+
+
     def welcome(self):
         """TO DO: Loop principal da máquina"""
         self.is_on = True
         self.storage.read_candrinks_stock("data/candrinks_stock.txt")
         self.storage.read_ingredients_stock("data/ingredients_stock.txt")
+        self.storage.get_admins("data/admins.txt")
         while self.is_on:
             username = input("Olá! Como devo chamá-lo?\n")
             self.user = User(name=username)
             user_type = input(f"Bem vindo {self.user.name}! Como posso ajudá-lo? \n Cliente(C) \n Administrador(A) \n Sair(E) \n Selecionado:")
             if user_type == "C":
                 self.client_intention()
+            elif user_type == "A":
+                is_admin = self.valid_admin()
+                if is_admin:
+                    self.user.permission = True
+                    self.admin_intention()
             elif user_type == "E":
                 self.is_on = False
-
-    def valid_admin(self):
-        """TO DO: Validar que o usuário é Admin"""
-        pass
-    
-    def admin_options(self):
-        """TO DO: Retorna Opção selecionada pelo Admin (Reabastecer, Cadastrar Produto ou Tirar Dinheiro)"""
-        pass
-
-    def fill_ingredients(self):
-        """TO DO: Admin reabastece máquina"""
-        pass
+            else:
+                print("Digite uma opção válida!")
 
     def withdraw_money(self):
         """TO DO: Admin Retira dinheiro"""
