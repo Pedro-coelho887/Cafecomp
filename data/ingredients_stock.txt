@@ -1,4 +1,4 @@
 Ingrediente   Quantidade
-Coffee   25 
-Sugar   27 
-Milk   18 
+Café   55 
+Açúcar   47 
+Leite   58 
