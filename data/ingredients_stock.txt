@@ -1,4 +1,4 @@
 Ingrediente   Quantidade
-Café   55 
-Açúcar   47 
-Leite   58 
+Café   39 
+Açúcar   34 
+Leite   44 

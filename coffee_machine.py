@@ -51,17 +51,17 @@ class CoffeeMachine():
         """Processo de compra de bebida dosada"""
         self.show_ingredients_stock()
         coffee = int(input("Qual a quantidade de café desejada? (Máximo 10)"))
-        while 0 > coffee or coffee > 10 or coffee > self.storage.ingredients_stock["Coffee"]:
+        while 0 > coffee or coffee > 10 or coffee > self.storage.ingredients_stock["Café"]:
             print("Quantidade Inválida!")
             coffee = int(input("Qual a quantidade de café desejada? (Máximo 10)"))
 
         milk = int(input("Qual a quantidade de leite desejada? (Máximo 10)"))
-        while 0 > milk or milk > 10 or milk > self.storage.ingredients_stock["Milk"]:
+        while 0 > milk or milk > 10 or milk > self.storage.ingredients_stock["Leite"]:
             print("Quantidade Inválida!")
             milk = int(input("Qual a quantidade de leite desejada? (Máximo 10)"))
 
         sugar = int(input("Qual a quantidade de açúcar desejada? (Máximo 10)"))
-        while 0 > sugar or sugar > 10 or sugar > self.storage.ingredients_stock["Sugar"]:
+        while 0 > sugar or sugar > 10 or sugar > self.storage.ingredients_stock["Açúcar"]:
             print("Quantidade Inválida!")
             sugar = int(input("Qual a quantidade de açúcar desejada? (Máximo 10)"))
         
@@ -92,6 +92,34 @@ class CoffeeMachine():
         print("Autenticação inválida")
         return False
 
+    def refill_candrinks(self):
+        if self.user is not None and self.user.permission == False:
+            print("Usuário sem permissão válida!")
+            return
+        candrink_code = input("Qual bebida deseja abastecer? (Digite o código)")
+        if candrink_code not in self.storage.candrinks_stock.keys():
+            print("Código de bebida inválido!")
+            return
+
+        quantity = int(input("Quantas unidades serão repostas?"))
+        self.storage.candrinks_stock[candrink_code]["Quantidade"] += quantity
+        self.storage.update_candrinks_stock(selling=False)
+        print("Reposição feita com sucesso!")
+        
+    def refill_ingredients(self):
+        if self.user is not None and self.user.permission == False:
+            print("Usuário sem permissão válida!")
+            return
+        new_coffee = int(input("Quanto de Café deseja abastecer?"))
+        new_sugar  = int(input("Quanto de Açúcar deseja abastecer?"))
+        new_milk = int(input("Quanto de Leite deseja abastecer?"))
+        self.storage.ingredients_stock["Café"] += new_coffee
+        self.storage.ingredients_stock["Leite"] += new_milk
+        self.storage.ingredients_stock["Açúcar"] += new_sugar
+        self.storage.update_ingredients_stock(selling=False)
+        print("Reposição feita com sucesso!")
+
+
     def admin_intention(self):
         """Capta a intenção do administrador"""
         admin_option = ""
@@ -99,26 +127,11 @@ class CoffeeMachine():
             admin_option = input(f"Olá {self.user.name}! O que deseja fazer? \n Reabastecer Bebidas em Lata (Rl)\n Reabastecer Ingredientes de Café (Ri)\n Ver estatísticas (S)\n Sair (E)\n") #type:ignore
             if admin_option == "Rl":
                 self.show_candrinks_stock()
-                candrink_code = input("Qual bebida deseja abastecer? (Digite o código)")
-                if candrink_code not in self.storage.candrinks_stock.keys():
-                    print("Código de bebida inválido!")
-                    return
-    
-                quantity = int(input("Quantas unidades serão repostas?"))
-                self.storage.candrinks_stock[candrink_code]["Quantidade"] += quantity
-                self.storage.update_candrinks_stock(selling=False)
-                print("Reposição feita com sucesso!")
+                self.refill_candrinks()
 
             elif admin_option == "Ri":
                 self.show_ingredients_stock()
-                new_coffee = int(input("Quanto de Café deseja abastecer?"))
-                new_sugar  = int(input("Quanto de Açúcar deseja abastecer?"))
-                new_milk = int(input("Quanto de Leite deseja abastecer?"))
-                self.storage.ingredients_stock["Café"] += new_coffee
-                self.storage.ingredients_stock["Leite"] += new_milk
-                self.storage.ingredients_stock["Açúcar"] += new_sugar
-                self.storage.update_ingredients_stock(selling=False)
-                print("Reposição feita com sucesso!")
+                self.refill_ingredients()
 
             elif admin_option == "S":
                 self.storage.show_stats("data/transactions.txt")
@@ -159,7 +172,5 @@ class CoffeeMachine():
         """TO DO: Admin Cadastra Produto --Deixar para depois de implementado banco de dados"""
         pass
 
-    def dose_drink(self):
-        """TO DO: Dosa o drink do usuário"""
 
 

@@ -23,7 +23,8 @@ class DataStorage:
         """Coleta o caixa atual"""
         with open(filepath) as f:
             transactions = f.readlines()
-
+        if len(transactions) < 2:
+            return 0
         last_transaction = transactions[-1].strip().split()
         act_account_balance = float(last_transaction[-1])
 
@@ -90,7 +91,25 @@ class DataStorage:
             self.admins[admin_name] = admin_password
 
     def show_stats(self,filepath):
-        pass
+        """Exibe as principais estatísticas da máquina"""
+        total_amt =  self.get_actual_accountbalance(filepath)
+        total_candrink_amt = 0
+        total_dosed_amt = 0
+        with open(filepath) as f:
+            transactions = f.readlines()
+
+        for transaction in transactions[1:]:
+            parts = transaction.strip().split()
+
+            if parts[1] in self.candrinks_stock.keys():
+                total_candrink_amt += float(parts[2])
+            elif parts[1] == "C":
+                total_dosed_amt += float(parts[2])
+
+        print("Estatísticas: ")
+        print(f"Valor total vendido: {total_amt}")
+        print(f"Valor total de bebibas dosadas vendido: {total_dosed_amt}")
+        print(f"Valor total de bebidas em lata vendido: {total_candrink_amt} \n")
 
 
 
