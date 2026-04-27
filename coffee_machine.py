@@ -49,21 +49,22 @@ class CoffeeMachine():
 
     def buy_dosed_drink(self):
         """Processo de compra de bebida dosada"""
+        print("Preço: 10.00")
         self.show_ingredients_stock()
-        coffee = int(input("Qual a quantidade de café desejada? (Máximo 10)"))
+        coffee = int(input("Qual a quantidade de café desejada? (0, 3, 5, 7, ou 10 gramas)"))
         while 0 > coffee or coffee > 10 or coffee > self.storage.ingredients_stock["Café"]:
             print("Quantidade Inválida!")
-            coffee = int(input("Qual a quantidade de café desejada? (Máximo 10)"))
+            coffee = int(input("Qual a quantidade de café desejada? (0, 3, 5, 7, ou 10 gramas)"))
 
-        milk = int(input("Qual a quantidade de leite desejada? (Máximo 10)"))
+        milk = int(input("Qual a quantidade de leite desejada? (0, 3, 5, 7, ou 10 gramas)"))
         while 0 > milk or milk > 10 or milk > self.storage.ingredients_stock["Leite"]:
             print("Quantidade Inválida!")
-            milk = int(input("Qual a quantidade de leite desejada? (Máximo 10)"))
+            milk = int(input("Qual a quantidade de leite desejada? (0, 3, 5, 7, ou 10 gramas)"))
 
-        sugar = int(input("Qual a quantidade de açúcar desejada? (Máximo 10)"))
+        sugar = int(input("Qual a quantidade de açúcar desejada? (0, 3, 5, 7, ou 10 gramas)"))
         while 0 > sugar or sugar > 10 or sugar > self.storage.ingredients_stock["Açúcar"]:
             print("Quantidade Inválida!")
-            sugar = int(input("Qual a quantidade de açúcar desejada? (Máximo 10)"))
+            sugar = int(input("Qual a quantidade de açúcar desejada? (0, 3, 5, 7, ou 10 gramas)"))
         
         self.user.drink = HotDrink(name="Coffee",price=10,code="C",coffee=coffee,milk=milk,sugar=sugar) #type:ignore
         success = self.financial_transaction()
@@ -164,13 +165,6 @@ class CoffeeMachine():
             else:
                 print("Digite uma opção válida!")
 
-    def withdraw_money(self):
-        """TO DO: Admin Retira dinheiro"""
-        pass
-
-    def new_product(self):
-        """TO DO: Admin Cadastra Produto --Deixar para depois de implementado banco de dados"""
-        pass
 
 
 
